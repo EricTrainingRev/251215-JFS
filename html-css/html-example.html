@@ -25,7 +25,7 @@
             kind of thing)
         -->
         <h1>This is my example HTML page</h1>
-        <h3>This is a sub header for my HTML page</h3>
+        <h3>This is a sub header for my HTML page</h3> 
         <h6>This is really small text on my HTML page</h6>
         this is raw text on the page
         
@@ -87,11 +87,52 @@
 
         </select>
 
+
         <p>What is the employee role?</p>
-        <select name="" id="">
-            <option value="actionFriend">add friend</option>
-            <option value="actionremove">remove friend</option>
-            <option value="actionBlock">block user</option>
+        <select name="role" id="employeeRoleSelect">
+            <option value="addDev">developer</option>
+            <option value="addTest">tester</option>
+            <option value="addPM">project manager</option>
         </select>
+
+        <!-- 
+            It is common when building web pages to want to group various elements (think grouping a login form and its elements). This
+            grouping can be for organization, for applying styling, for ease of targeting with your JavaScript, etc. An easy way to group
+            your elements is to use the div element. Div by itself does nothing, it is what is known as a "semantic" element. It exists
+            purely for the sake of organizing your elements
+        -->
+        <div>
+            <p>this is inside a div</p>
+        </div>
+
+        <!-- 
+            In the example above we wrapped the entire paragraph element inside of a div. If we want to wrap only part of the text
+            for specific targeting (could be styling, dynamic code, etc) we could use a span instead
+
+            This highlights the difference between inline elements and block elements:
+            - Block elements -> take up their entire "line" on the page (think full width of the page). When block elements are siblings
+                                in the dom they render on new lines by default
+            - Inline elements -> these only take up as much space as they need in order to render. Because of this it is common to have
+                                 multiple inline elements rendered on the same "line" of the web page
+        -->
+
+        <p>This text also has a <span>span</span> that wraps <span>some</span> of it</p>
+
+        <!-- 
+            A very common and useful element is the input element: this will be your primary tool for allowing users to provide
+            information to the web page for further action, whether it be text input, date input, time input, files, etc.
+        -->
+
+        <input type="text">
+        <input type="password">
+        <input type="date">
+        <input type="color">
+        <input type="file">
+
+        <!-- 
+            A common pattern is for users to provide data in an input and then click a button to trigger the submission of the data.
+            Currently this button does nothing, but it could be set up to trigger an action when pressed
+        -->
+        <button>submit data</button>
     </body>
 </html>
