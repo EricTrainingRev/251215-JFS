@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h2{
+            color: blue;
+        }
+
+        /* 
+            Because we are targeting input elements in general this styling will be applied to all inputs on the page
+        */
+        input {
+            border: 5px solid purple;
+            border-top: 10px dotted green;
+            padding-left: 15px;
+            padding-top: 10px;
+        }
+
+        /* 
+            To target elements by their class you put a period before the class name
+        */
+        .groupedStyling {
+            font-size: 32px;
+            color: yellow;
+            text-shadow: -1px -1px 1px green;
+        }      
+        
+        /* 
+            If you want to target an element by its id so it alone has some styling you put a # before the value of the id
+        */
+        #uniqueStyling{
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            border: 3px dashed orange;
+            text-align: center;
+        }
+
+    </style>
+    <link rel="stylesheet" href="external-style.css">
+</head>
+<body>
+    
+    <!-- 
+        To make our web pages look good we can use Cascading Style Sheet (CSS) in order to style
+        our pages. There are three ways we can add styling to our page
+        - inline -> editing the style attribute of an element directly in the tag
+        - internal -> adding a style element to the head to apply styling to the entire page
+        - external -> linking css from an external style sheet to the page
+    -->
+    <h1 style="color:red;">This has inline styling</h1>
+    <h2>This has internal styling</h2>
+    <h3>This has external styling</h3>
+
+    <!-- 
+        All elements on a page fit within the "box model". They all have access to the following:
+        - Margin -> space between the element and the next element
+        - Border -> the boundary surrounding the element
+        - Padding -> the space between the element and its border
+        - Content -> the stuff of the element itself
+    -->
+
+    <!-- 
+        In the example below, the first input wants 5 pixels between it and whatever elements render to its right in the viewport,
+        whereas the second input wants 15 pixels between it and elements that render to its left in the viewport. 15 is larger than 5,
+        so in this case the distance between the elements will be 15 pixels
+    -->
+    <input type="text" value="first input" style="margin-right: 5px; margin-top: 20px">
+    <input type="text" value="second input" style="margin-left: 15px; margin-bottom: 20px;">
+
+
+    <!-- 
+        So far we have used tag selectors to apply styling to all elements of a type, but what if we need to apply styling to some
+        elements of a type and different styling to other elements of that same type? In these cases we can make use of class and
+        id selectors. When applying styling to elements, we can target elements for styling by their attributes (css selector). Two
+        common attributes to use for targeting are classes and ids, so these have their own unique way of being targeted
+    -->
+    <p class="groupedStyling">First paragraph</p>
+    <p class="groupedStyling">Second paragraph</p>
+    <p id="uniqueStyling">Third paragraph</p>
+
+</body>
+</html>
