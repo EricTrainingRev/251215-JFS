@@ -1,22 +1,97 @@
 <!-- We can use this doctype tag to tell the browser what version of HTML we are using -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <!-- 
-        Hyper Text Markup Language (HTML) is THE standard for web development. Browsers can take
-        the HTML you create and use it to render content in the browser. All HTML is built using
-        tags: these are text blocks between diamond brackets (<>), some of which are singular tags
-        and others that have open and closing tags.
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HTML Example</title>
+    </head>
+    <body>
+        <!-- 
+            Hyper Text Markup Language (HTML) is THE standard for web development. Browsers can take
+            the HTML you create and use it to render content in the browser. All HTML is built using
+            tags: these are text blocks between diamond brackets (<>), some of which are singular tags
+            and others that have open and closing tags.
 
-        Some core HTML tags:
-        - html tags: root tag of the page
-        - head tags: this section stores meta data about the page
-        - body tags: this is where the content of the page lives
-    -->
-</body>
+            Some core HTML tags:
+            - html tags: root tag of the page
+            - head tags: this section stores meta data about the page
+            - body tags: this is where the content of the page lives
+        -->
+
+        <!-- 
+            Header elements are used to create titles or banners for sections of your web page. h1 is the largest of these
+            headers, h6 is the smallest, smaller even than regular text appears on the page (useful for sub headers, subtext, that
+            kind of thing)
+        -->
+        <h1>This is my example HTML page</h1>
+        <h3>This is a sub header for my HTML page</h3>
+        <h6>This is really small text on my HTML page</h6>
+        this is raw text on the page
+        
+        <!-- 
+            While you can put text content directly in the body element it is not ideal: a more standardized way of adding text
+            is to wrap it inside of a p element. This will make standardizing and customizing the styling on your page much easier
+            in the long run
+        -->
+        <p>This is an example of the paragraph element and its text</p>
+
+        <!--  
+            If you want to add an image to your page you can use the img tag. This takes in a src which is either the path to the 
+            image locally or web link for where the image exists, and an alt value to display if something goes wrong trying to load
+            the image
+
+            NOTE: the src attribute is not case sensitive
+        -->
+        <img src="Dom-Visual.png" alt="dom visualization">
+        <img src="Dom-Visual.pngg" alt="dom visualization">
+
+        <!-- 
+            We have a few examples now of tags, elements, and attributes:
+            - Elements -> these are the individual components of your web page. They are created by adding tags to your html file, or
+                          dynamically created via JavaScript
+            - Tags ->     These are the markup text we use to tell the browser what content (aka elements) to render in the browser
+            - attributes -> these are the properties of our elements that augment the way the browser renders them. They can also be used
+                            to provide functionality to our elements
+        -->
+
+        <!-- 
+            There are two core types of lists you can create: ordered and unordered. The key difference is whether or not the order of
+            elements matters. Both types of lists utilize the same child element: list item (li)
+        -->
+
+        <!-- use ordered lists when you want to indicate the order of elements matters -->
+        <p>Favorite Animals</p>
+        <ol>
+            <li>Cat</li>
+            <li>Dog</li>
+            <li>Dragon</li>
+        </ol>
+
+        <!-- if order does not matter but you want things grouped in a list use an unordered list (ul) -->
+         <p>Grocery List</p>
+         <ul>
+            <li>Apples</li>
+            <li>Bananas</li>
+            <li>Beef</li>
+            <li>Soap</li>
+         </ul>
+
+        <!-- 
+            If you want to create a dropdown list and allow users to select one or more options you use a select element with nested
+            option elements
+        -->
+        <select name="rpgClassSelector" id="rpgClassSelector">
+            <option value="">Choose class</option>
+            <option value="class_one">Rogue</option>
+
+        </select>
+
+        <p>What is the employee role?</p>
+        <select name="" id="">
+            <option value="actionFriend">add friend</option>
+            <option value="actionremove">remove friend</option>
+            <option value="actionBlock">block user</option>
+        </select>
+    </body>
 </html>
