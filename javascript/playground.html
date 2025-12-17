@@ -30,13 +30,101 @@
     var whatIsThis; // this variable is hoisted
     whatIsThis = "Actual value"; // value is finally assigned
 
-    console.log(valueChanges);
+    
     // the modern way of creating variables: use let for dynamic values, const for constant values
     let valueChanges;
+    console.log(valueChanges); // will show undefined
     valueChanges = "Something";
+    console.log(valueChanges) // will show Something
     valueChanges = "Something new";
+    console.log(valueChanges) // will show Something new
 
     const PI = 3.14;
+    console.log(PI) // will show 3.14
+    // PI = 4.15; will cause your code to crash
+
+    /*
+        Some common data types you will work with
+
+        strings -> these can be made with single or double quotes
+        number -> supports whole numbers and floating values
+        boolean -> represents your logical true/false
+    */
+
+    "valid string";
+    'also valid'
+    10
+    10.2
+    true
+    false
+
+
+    // example of type coercion by JS: string concatenation will happen below
+    const name = "Billy";
+    const age = 25;
+    console.log(age + name);
+
+    // the console will print true: the 50 string is coerced to a number for the comparison
+    const hundred = 100;
+    const fifty = "50";
+    console.log(hundred > fifty);
+
+    /*
+        JavasScript has "truthy" and "falsey" values. When making logical checks the interpreter
+        will coerce some values to "false" and some to "true":
+
+        Some falsey values:
+        - 0
+        - empty strings
+        - undefined
+        - null
+
+        everything else gets coerced to true
+    */
+
+    /*
+        JavaScript arrays are very flexible:
+        - they resize to accommodate new data
+        - they can hold multiple types of data
+        - they have a significant number of helper functions
+    */
+
+    const dataArray = ["Billy", "Sally", 34, 100, true, null];
+    dataArray.push(false);
+    // enhanced for loop
+    for (const data of dataArray){
+        console.log(data);
+    }
+
+    const tictactoeBoard = [
+        ["O","X","O"],
+        ["O","X"," "],
+        [" "," "," "]
+    ]
+
+    /*
+        There are two primary ways of creating functions in plain JavaScript: using the function
+        keyword and creating arrow functions
+    */
+
+
+   function greetPerson(personName){
+    console.log(personName);
+   }
+   greetPerson("Timmy");
+   greetPerson(10);
+   greetPerson(true);
+
+   const greetPersonTwo = personName => console.log(personName);
+   greetPersonTwo("Milly");
+
+   
+   const noParams = () => console.log("Hello world!");
+   const multipleParams = (paramOne, paramTwo) => {
+    console.log(paramOne);
+    console.log(paramTwo);
+   }
+
 </script>
 <script src="playground.js"></script>
 </html>
