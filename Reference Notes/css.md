@@ -231,7 +231,7 @@ Flexbox is a layout model for arranging items in a container, even when their si
 	margin: 10px;
 }
 ```
-
+flexbox generator: https://cssgenerator.dev/flexbox
 ---
 
 ## CSS Grid
@@ -249,7 +249,7 @@ CSS Grid is a powerful layout system for creating complex, responsive grid-based
 	padding: 10px;
 }
 ```
-
+Grid generator: https://cssgridgenerator.io/
 ---
 
 ## CSS Variables
