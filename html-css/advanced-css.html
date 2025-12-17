@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .parent {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 8px;
+        }
+            
+        .div1 {
+            grid-column: span 5 / span 5;
+        }
+
+        .div2 {
+            grid-row: span 3 / span 3;
+            grid-row-start: 2;
+        }
+
+        .div3 {
+            grid-column: span 4 / span 4;
+            grid-row: span 3 / span 3;
+            grid-row-start: 2;
+        }
+
+        .div4 {
+            grid-column: span 5 / span 5;
+            grid-row-start: 5;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="div1">
+            <h1>Welcome to my page!</h1>
+        </div>
+        <div class="div2">
+            <div class="flex-container">
+                <a href="">Info</a>
+                <a href="">About Me</a>
+                <a href="">Register</a>
+                <a href="">Other Stuff</a>
+            </div>
+
+        </div>
+        <div class="div3">
+            <p>This is the main content</p>
+        </div>
+        <div class="div4">
+            <p>This is the footer</p>
+        </div>
+    </div>
+</body>
+</html>

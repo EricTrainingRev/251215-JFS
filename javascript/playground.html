@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Example</title>
+</head>
+<body>
+    
+</body>
+<script>
+    console.log("Hello world!");
+    /*
+        JavaScript is a weakly and dynamically typed programming language
+        - weakly typed -> types are not set in stone: the interpreter will sometimes coerce values
+                          into a new type in order for the code to execute
+        - dynamically typed -> you don't have to declare the type of your variables when you create
+                               them
+
+        It is an interpreted language, meaning the JS interpreter goes line by line compiling and 
+        executing your code from the start of your script to the end of your script
+
+        The language supports multiple programming paradigms such as Object Oriented Programming
+        and Functional programming
+    */
+
+    // old way to create variables: the variable is hoisted, so the code below is valid
+    var myVariable = "Whatever the value is";
+    console.log(whatIsThis); // prints undefined
+    var whatIsThis; // this variable is hoisted
+    whatIsThis = "Actual value"; // value is finally assigned
+
+    console.log(valueChanges);
+    // the modern way of creating variables: use let for dynamic values, const for constant values
+    let valueChanges;
+    valueChanges = "Something";
+    valueChanges = "Something new";
+
+    const PI = 3.14;
+</script>
+<script src="playground.js"></script>
+</html>
