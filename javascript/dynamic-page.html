@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Page</title>
+</head>
+<body>
+
+</body>
+<script>
+    /*
+        When using JavaScript in the browser you have access to all the elements in the DOM via the document object. This
+        object provides access to helper functions that provide the way for us to interact with the DOM
+    */
+   const body = document.body; // this gives us quick access to the body element in the DOM
+   // this will create an h1 element and save its reference to our h1 variable
+   const h1 = document.createElement('h1');
+   // next we can set the text content for the h1 element
+   h1.textContent = 'Welcome to my color picker!'; 
+   // now we can add this h1 element to the body of the DOM
+   body.appendChild(h1);
+
+   // let's add some instructions for our color picker
+   const instructionParagraph = document.createElement("p");
+   instructionParagraph.textContent = 'Follow the instructions below:';
+   body.appendChild(instructionParagraph);
+
+   // we can automate some of the adding of web elements to our page
+   const directions = [
+    'Pick a color',
+    'Click the finalize button',
+    'Enjoy the selection!'
+   ]
+
+   const orderedInstructions = document.createElement("ol");
+   /*
+        forEach requires a callback function to work: this is an arrow function with the code we actually want executed for each element
+        in our array. For each element, it will be passed into the arrow function and used with whatever code we write
+   */
+   directions.forEach(
+        // the callback can take two arguments: a variable representing the element, and one representing the index postion of the element
+        (element, index)=>{
+            const li = document.createElement("li");
+            li.textContent = element;
+            orderedInstructions.appendChild(li);
+        }
+    );
+
+    body.appendChild(orderedInstructions);
+
+    const colorSelector = document.createElement('input');
+    colorSelector.type = 'color';
+
+    body.appendChild(colorSelector);
+
+    const finalizeButton = document.createElement('button');
+    finalizeButton.textContent = 'Finalize'
+    /*
+        event listeners are how we make our web pages dynamic. The addEventListener function provides instructions for our elements
+        and what code to execute when specified events happen. For our purpose, when the "click" event happens with our button, we
+        want the background of our page to change to whatever color the user selected. We can make this happen with our event listener
+    */
+    finalizeButton.addEventListener(
+        "click",
+        event => {
+            // the event parameter represents the actual event in our code: we do not need to do anything with it at this time
+            body.style.backgroundColor = colorSelector.value;
+        }
+    )
+
+    body.appendChild(finalizeButton);
+
+    
+
+</script>
+</html>
