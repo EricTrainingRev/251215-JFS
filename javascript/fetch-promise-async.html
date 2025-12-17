@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    /*
+        When using vanilla JavaScript the fetch API is the main way of making http requests. You
+        can set the http method type (GET, POST, etc.), the body of the request, headers, etc.
+    */
+
+    // fetch returns a promise: this is a placeholder for the actual data we want.
+    // NOTE: you do not need to do this, this is just here to show you how to navigate promises
+   const response = fetch('https://pokeapi.co/api/v2/pokemon/bulbasaur')
+   console.log(response);
+   // to tell JS what to do when the promise is fulfilled, when we have the data, use the "then" function
+   response.then( response => {
+        if(response.ok){
+            return response.json()
+        } else {
+            throw new Error("Request failed");
+        }
+   }).then( responseBody => {
+        console.log(responseBody.name);
+   }).catch( error => {
+        console.log(error);
+   })
+
+   async function getPokemon(pokemonName){
+    // we can use a template literal to make our api request more dynamic
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+    if (response.ok){
+        const responseBody = await response.json();
+        console.log(responseBody.name);
+    } else {
+        console.log("Request failed");
+    }
+   }
+
+   getPokemon("bulbasaur");
+
+
+
+
+</script>
+</html>
