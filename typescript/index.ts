@@ -1,3 +1,5 @@
+import { convertStringNumberToNumber } from "./casting.js";
+
 /*
     If you want to execute your code with node you simply reference it after the node command. Keep
     in mind if working with ts you can't directly execute your ts code: you must first use the
@@ -9,3 +11,12 @@
 */
 
 console.log("Hello world!");
+
+// to indicate the type of a variable use a colon and then write out the actual type
+let value: string;
+value = "Some string value";
+// value = 10; invalid code since 10 is a number, not a string
+
+console.log(value);
+
+console.log(convertStringNumberToNumber("50"));
