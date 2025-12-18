@@ -45,3 +45,30 @@ function checkValidNumber(num: number): PossibleReturnValues {
         return num;
     }
 }
+
+/*
+    As a reminder, in both JavaScript and TypeScript objects are fundamentally a collection of
+    key-value pairs. We can create custom types that define the structure of these key-value
+    pairs
+*/
+
+type Person = {
+    name: string,
+    age: number,
+    // etc.
+}
+
+// if we leave off name or age or try to add more properties we will get an error
+const billy: Person = {name:"Billy", age: 12};
+
+/*
+    You can use the type keyword in order to make custom types for your objects, but the more
+    standardized way of doing so is through custom interfaces
+*/
+
+interface PersonInterface {
+    name: string,
+    age: number
+}
+
+const sally: PersonInterface = {name:"Sally", age: 37};

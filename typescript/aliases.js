@@ -27,4 +27,7 @@ function checkValidNumber(num) {
         return num;
     }
 }
+// if we leave off name or age or try to add more properties we will get an error
+const billy = { name: "Billy", age: 12 };
+const sally = { name: "Sally", age: 37 };
 export {};
