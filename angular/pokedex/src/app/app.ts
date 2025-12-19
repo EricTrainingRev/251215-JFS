@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 
@@ -19,4 +19,23 @@ import { RouterOutlet } from '@angular/router';
 */
 export class App {
   protected readonly title = signal('pokedex');
+
+  /*
+    Here we are defining variables to hold the data we want displayed on our page. This centralizes the definition of data here in the
+    component class, and we can focuses purely on displaying this data in our html template
+  */
+
+  // this makes the headerText variable a property of the App class
+  headerText: string = "Welcome to the Pokedex!";
+  searchInstructions: string = "Use the search option below to look up Pokemon information: you may use the id of the pokemon or its name";
+  buttonText: string = "Whose's that Pokemon?";
+  searchType: string = "text"; // value for search type attribute
+  placeholderText: string = "enter id or name here" // value for input placeholder attribute
+
+  /*
+    A core resource for making reactive web pages is signals: the default type of signal created by the signal function is a
+    WritableSignal: this object allows for updates to its data (set by a generic), and anytime the data is updated the signal emits
+    a "signal", which Angular detects and then updates the rendered view with the new content
+  */
+  pokemonName: WritableSignal<string> = signal("");
 }
