@@ -1,4 +1,5 @@
 import { Component, signal, WritableSignal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 
 
@@ -9,7 +10,11 @@ import { RouterOutlet } from '@angular/router';
 */
 @Component({
   selector: 'app-root', // how to reference the component 
-  imports: [RouterOutlet], // what other resources the component needs access to
+  /*
+    what other resources the component needs access to. In this case, we have access to the RouterOutlet to control routing, and
+    the FormsModule to gain access to the ngModel directive in our template
+  */
+  imports: [RouterOutlet, FormsModule],
   templateUrl: './app.html', // a link to the component html or the raw html itself
   styleUrl: './app.css' // link to styling,
 })
@@ -38,4 +43,15 @@ export class App {
     a "signal", which Angular detects and then updates the rendered view with the new content
   */
   pokemonName: WritableSignal<string> = signal("");
+
+  /*
+    This pokemonIdentifier variable will be connected to the value attribute of our search input in the template. Any changes to either
+    the variable below or the input value in the web page will be reflected in both places.
+  */
+  pokemonIdentifier: string = "";
+
+  // note we just provide the function signature when defining a function in a class
+  updateDisplayedPokemonName(){
+    this.pokemonName.set(this.pokemonIdentifier);
+  }
 }

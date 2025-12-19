@@ -9,9 +9,16 @@
     the type attribute wrapped in square brackets is property binding: we are telling Angular we want to set the value of the type attribute
     via code in our component class. This allows us to determine the value of the attribute within our component class and dynamically
     update it if needed
+
+    note that ngModel (which we get access to via the FormsModule imported in the component) has square and parenthesis around it: this
+    represents two way data binding. Any time the pokemonIdentifier or value of the input changes, the change is reflected in the other
+    resource. In essence, the value of the input and the value of the variable are connected
+
+    for the button, we are telling angular we want to bind the execution of the updateDisplayedPokemonName function with the click event
+    on the button. This is a much easier syntax to use than manually setting an event listener
 -->
-<input [type]="searchType" [placeholder]="placeholderText" >
-<button>{{buttonText}}</button>
+<input [type]="searchType" [placeholder]="placeholderText" [(ngModel)]="pokemonIdentifier">
+<button (click)="updateDisplayedPokemonName()">{{buttonText}}</button>
 
 <h2>{{pokemonName()}}</h2>
 
