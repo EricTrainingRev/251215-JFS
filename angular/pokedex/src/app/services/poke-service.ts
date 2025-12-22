@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PokemonIdentifiers } from '../types/custom-types';
 import { PokemonData } from '../interfaces/pokemon-data';
+import { BehaviorSubject } from 'rxjs';
 
 /*
   Anytime you need to share data in your components you should use a service. Services are Angular's
@@ -14,8 +15,30 @@ import { PokemonData } from '../interfaces/pokemon-data';
   providedIn: 'root',
 })
 export class PokeService {
+
+  /*
+    Because many components will need access to the PokemonData, and they will need to dynamically
+    update when the PokemonData is updated, we can make use of a Subject. Subjects are a special
+    kind of Observable: one of the key differences between a Subject and Observable is that Subjects
+    support multi-casting: each subscriber to the Subject will receive the same results of the 
+    Subject being updated, whereas if we had each component subscribe individually to the Observable
+    returned by the HTTP Client each component would get its own unique execution of the observable's 
+    callback function. This means the Subject route is a more optimized solution for sharing the Pokemon
+    state data and its changes to all our components.
+  */
+  private pokemonSubject: BehaviorSubject<PokemonData>;
   
-  constructor(private httpClient: HttpClient){}
+  constructor(private httpClient: HttpClient){
+    this.pokemonSubject = new BehaviorSubject<PokemonData>({
+      name:"",
+      sprites:{
+        back_default:"",
+        front_default:""
+      },
+      types:[],
+      moves:[]
+    });
+  }
 
 
   /*
@@ -45,6 +68,13 @@ export class PokeService {
     .subscribe({
       next: responseData => {
         console.log(responseData); // all the data, but intellisense will only show PokemonData properties
+        /*
+          Here we tell our pokemon subject to take the data from the response body and update the
+          PokemonData being stored in the subject. This will update the data and inform all subscribers
+          of the change. This ends the responsibility of the subject: it is up to us to tell each subscriber
+          (our components) what to do with the updated PokemonData
+        */
+        this.pokemonSubject.next(responseData);
       },
       error: err => {
         console.log(err);
