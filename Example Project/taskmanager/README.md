@@ -44,8 +44,14 @@ interacting with the database
   - TaskTitle
   - TaskDescription
   - TaskComplete
+  - client (reference to client id)
 - SubTask
   - SubTaskId (identifier)
   - SubTaskTitle
   - SubTaskDescription
   - SubTaskComplete
+  - task (reference to task id)
+
+## NOTE
+double-check the custom queries for the task and subtask repositories: may need to provide
+the actual record object instead of the column type
