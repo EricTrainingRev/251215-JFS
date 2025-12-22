@@ -1,7 +1,7 @@
 import { Component, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-
+import { PokeName } from './components/poke-name/poke-name';
 
 /*
   This Component decorator tells Angular that our class represents a Component. Components are the
@@ -14,7 +14,7 @@ import { RouterOutlet } from '@angular/router';
     what other resources the component needs access to. In this case, we have access to the RouterOutlet to control routing, and
     the FormsModule to gain access to the ngModel directive in our template
   */
-  imports: [RouterOutlet, FormsModule],
+  imports: [RouterOutlet, FormsModule, PokeName],
   templateUrl: './app.html', // a link to the component html or the raw html itself
   styleUrl: './app.css' // link to styling,
 })
