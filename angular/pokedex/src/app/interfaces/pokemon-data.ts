@@ -1,10 +1,27 @@
+
+/*
+    here we are defining some interfaces to provide type safety and type hints for the data we are retrieving from the PokeAPI. Note that
+    these types provide the structure for the specific data we want to retrieve from the API, it does not represent all the data we are
+    getting from the API
+*/
+interface TypeData {
+    type: {
+        name:string
+    }
+}
+
+interface MoveData {
+    move: {
+        name: string
+    }
+}
+
 export interface PokemonData {
     name:string,
     sprites:{
         back_default:string,
         front_default: string
     },
-    // NOTE: the typing below works, but we can make it easier to read/understand with more custom interfaces
-    types: Array<{type:{name:string}}>,
-    moves: Array<{move:{name: string}}>
+    types: Array<TypeData>,
+    moves: Array<MoveData>
 }
