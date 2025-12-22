@@ -1,27 +1,36 @@
 <!-- 
-    The double curly brackets below are used to tell Angular we want to display whatever property or function result that is referenced
-    in the template statement. For the examples below we are telling Angular to display as text content the values of the referenced
-    fields
+    Starting in Angular 17 the formatting for structural directives changed: it used to be you
+    would use syntax in a tag to provide the logic for how content would render on the page. Now, the
+    modern way of controlling the rendering logic is to use the @ and then a standard control flow
+    statement, much like if you were writing standard JavaScript. The Angular engine knows how to
+    convert this syntax into executable JavaScript code.
 -->
-<h1> {{headerText}} </h1>
-<p> {{searchInstructions}} </p>
-<!-- 
-    the type attribute wrapped in square brackets is property binding: we are telling Angular we want to set the value of the type attribute
-    via code in our component class. This allows us to determine the value of the attribute within our component class and dynamically
-    update it if needed
+@if (false) {
+    <!-- 
+        The double curly brackets below are used to tell Angular we want to display whatever property or function result that is referenced
+        in the template statement. For the examples below we are telling Angular to display as text content the values of the referenced
+        fields
+    -->
+    <h1> {{headerText}} </h1>
+    <p> {{searchInstructions}} </p>
+    <!-- 
+        the type attribute wrapped in square brackets is property binding: we are telling Angular we want to set the value of the type attribute
+        via code in our component class. This allows us to determine the value of the attribute within our component class and dynamically
+        update it if needed
 
-    note that ngModel (which we get access to via the FormsModule imported in the component) has square and parenthesis around it: this
-    represents two way data binding. Any time the pokemonIdentifier or value of the input changes, the change is reflected in the other
-    resource. In essence, the value of the input and the value of the variable are connected
+        note that ngModel (which we get access to via the FormsModule imported in the component) has square and parenthesis around it: this
+        represents two way data binding. Any time the pokemonIdentifier or value of the input changes, the change is reflected in the other
+        resource. In essence, the value of the input and the value of the variable are connected
 
-    for the button, we are telling angular we want to bind the execution of the updateDisplayedPokemonName function with the click event
-    on the button. This is a much easier syntax to use than manually setting an event listener
--->
-<input [type]="searchType" [placeholder]="placeholderText" [(ngModel)]="pokemonIdentifier">
-<button (click)="updateDisplayedPokemonName()">{{buttonText}}</button>
+        for the button, we are telling angular we want to bind the execution of the updateDisplayedPokemonName function with the click event
+        on the button. This is a much easier syntax to use than manually setting an event listener
+    -->
+    <input [type]="searchType" [placeholder]="placeholderText" [(ngModel)]="pokemonIdentifier">
+    <button (click)="updateDisplayedPokemonName()">{{buttonText}}</button>
 
-<h2>{{pokemonName()}}</h2>
-
+    <h2>{{pokemonName()}}</h2>
+}
+<app-poke-search></app-poke-search>
 <app-poke-name></app-poke-name>
 
 <!-- we will use this later -->

@@ -44,7 +44,7 @@ export class PokeService {
     this.httpClient.get<PokemonData>(`https://pokeapi.co/api/v2/pokemon/${pokemonIdentifier}`)
     .subscribe({
       next: responseData => {
-        console.log(responseData);
+        console.log(responseData); // all the data, but intellisense will only show PokemonData properties
       },
       error: err => {
         console.log(err);

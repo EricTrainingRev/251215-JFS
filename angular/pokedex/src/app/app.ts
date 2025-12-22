@@ -2,6 +2,7 @@ import { Component, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { PokeName } from './components/poke-name/poke-name';
+import { PokeSearch } from "./components/poke-search/poke-search";
 
 
 /*
@@ -15,7 +16,7 @@ import { PokeName } from './components/poke-name/poke-name';
     what other resources the component needs access to. In this case, we have access to the RouterOutlet to control routing, and
     the FormsModule to gain access to the ngModel directive in our template
   */
-  imports: [RouterOutlet, FormsModule, PokeName],
+  imports: [RouterOutlet, FormsModule, PokeName, PokeSearch],
   templateUrl: './app.html', // a link to the component html or the raw html itself
   styleUrl: './app.css' // link to styling,
 })
