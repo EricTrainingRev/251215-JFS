@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 import { PokeService } from '../../services/poke-service';
 
 @Component({
@@ -9,11 +9,15 @@ import { PokeService } from '../../services/poke-service';
 })
 export class PokeName {
 
+  pokemonNameValue: WritableSignal<string> = signal("");
+
   /*
     This is how you implement constructor dependency injection: you declare a private property and
     set its type to the resource you want injected. As long as it is an injectable resource Angular
     will automatically handle the dependency injection for the component when it is used
   */
-  constructor(private pokeService: PokeService){}
+  constructor(private pokeService: PokeService){
+    this.pokeService.getPokemonSubject().subscribe( pokemonData => this.pokemonNameValue.set(pokemonData.name));
+  }
 
 }

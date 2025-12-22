@@ -82,4 +82,8 @@ export class PokeService {
     });
   }
 
+  getPokemonSubject(){
+    return this.pokemonSubject;
+  }
+
 }

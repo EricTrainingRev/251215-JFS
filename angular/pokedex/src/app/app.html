@@ -31,7 +31,11 @@
     <h2>{{pokemonName()}}</h2>
 }
 <app-poke-search></app-poke-search>
-<app-poke-name></app-poke-name>
+
+@if(pokeNamePresent()){
+    <app-poke-name></app-poke-name>
+}
+
 
 <!-- we will use this later -->
 <router-outlet />

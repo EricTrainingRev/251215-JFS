@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { PokeName } from './components/poke-name/poke-name';
 import { PokeSearch } from "./components/poke-search/poke-search";
+import { PokeService } from './services/poke-service';
 
 
 /*
@@ -26,6 +27,20 @@ import { PokeSearch } from "./components/poke-search/poke-search";
 */
 export class App {
   protected readonly title = signal('pokedex');
+
+  pokeNamePresent: WritableSignal<boolean> = signal(false);
+
+  /*
+    In order to conditionally display the pokedata components we can subscribe to the subject
+    here in the app component and check if the data in the subject is present. If it is not, we
+    do not render the pokedata components. If it is present, then we do render the components, and let
+    them handle subscribing to the subject to update their specific resources
+  */
+  constructor(private pokeService: PokeService){
+    this.pokeService.getPokemonSubject().subscribe( pokeData => {
+      this.pokeNamePresent.set(pokeData.name != "");
+    })
+  }
 
   /*
     Here we are defining variables to hold the data we want displayed on our page. This centralizes the definition of data here in the
