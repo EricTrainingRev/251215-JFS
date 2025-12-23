@@ -1,4 +1,4 @@
-import { Component, OnDestroy, signal, WritableSignal } from '@angular/core';
+import { Component, Input, OnDestroy, signal, WritableSignal } from '@angular/core';
 import { PokeService } from '../../services/poke-service';
 import { Subscription } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 })
 export class PokeName implements OnDestroy {
   // the OnDestroy interface gives us access to the lifecycle method ngOnDestroy. This triggers before the component is destroyed
-
+  
   pokemonNameValue: WritableSignal<string> = signal("");
 
   /*
