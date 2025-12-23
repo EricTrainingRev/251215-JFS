@@ -1,5 +1,6 @@
 package com.revature.taskmanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -25,6 +26,7 @@ public class Client {
     @Column
     private String email;
     @Column
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     public Client(String email, String password) {
@@ -38,6 +40,7 @@ public class Client {
         return email;
     }
 
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -45,6 +48,7 @@ public class Client {
     public String getPassword() {
         return password;
     }
+
 
     public void setPassword(String password) {
         this.password = password;

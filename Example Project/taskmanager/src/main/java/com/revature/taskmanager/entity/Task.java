@@ -22,6 +22,6 @@ public class Task {
     @Column(name = "task_complete")
     private boolean taskComplete;
     @ManyToOne
-    @JoinColumn(name = "email", nullable = false)
+    @JoinColumn(nullable = false)
     private Client client;
 }

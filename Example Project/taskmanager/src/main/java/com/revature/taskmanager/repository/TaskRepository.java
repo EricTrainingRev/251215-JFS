@@ -1,5 +1,6 @@
 package com.revature.taskmanager.repository;
 
+import com.revature.taskmanager.entity.Client;
 import com.revature.taskmanager.entity.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,5 +17,5 @@ public interface TaskRepository extends JpaRepository<Task, UUID> {
         naming convention. More detail on this can be found here:
         https://docs.spring.io/spring-data/jpa/docs/current-SNAPSHOT/reference/html/#jpa.query-methods.query-creation
      */
-    List<Task> findByEmail(String email);
+    List<Task> findByClient(Client client);
 }
