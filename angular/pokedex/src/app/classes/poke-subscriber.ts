@@ -7,14 +7,14 @@ import { Subscription } from "rxjs";
     to actually run it when any component that inherits this class is destroyed
 */
 @Directive()
-export abstract class Subscriber implements OnDestroy {
+export abstract class PokeSubscriber implements OnDestroy {
 
     /*
         You can put a question mark at the end of a variable name to tell the TS compiler that
         the resource will be initialized somewhere else in your code. For our purposes, we will
         need to initialize it in the inheriting child classes
     */
-    private subscription?: Subscription
+    protected subscription?: Subscription
 
     ngOnDestroy(): void {
         /*
