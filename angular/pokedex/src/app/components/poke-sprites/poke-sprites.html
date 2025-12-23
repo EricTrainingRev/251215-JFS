@@ -1,1 +1,9 @@
-<p>poke-sprites works!</p>
+<div>
+    <!-- 
+        We can use a for loop via an Angular structural directive to programmatically create our
+        image elements and set their src attribute
+    -->
+    @for (url of spriteData(); track $index) {
+        <img [src]="url" [alt]="`${altText}-${$index}`">
+    }
+</div>
