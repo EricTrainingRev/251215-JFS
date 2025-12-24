@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet, RouterLinkWithHref, Router } from '@angular/router';
 import { PokeName } from './components/poke-name/poke-name';
@@ -7,6 +7,7 @@ import { PokeService } from './services/poke-service';
 import { PokeSprites } from './components/poke-sprites/poke-sprites';
 import { PokeType } from './components/poke-type/poke-type';
 import { PokeMove } from './components/poke-move/poke-move';
+import { PokedexButton } from "./components/pokedex-button/pokedex-button";
 
 
 /*
@@ -28,7 +29,8 @@ import { PokeMove } from './components/poke-move/poke-move';
     PokeSprites,
     PokeType,
     PokeMove,
-    RouterLinkWithHref
+    RouterLinkWithHref,
+    PokedexButton
 ],
   templateUrl: './app.html', // a link to the component html or the raw html itself
   styleUrl: './app.css' // link to styling,
@@ -37,7 +39,7 @@ import { PokeMove } from './components/poke-move/poke-move';
   classes in TypeScript and JavaScript are still fundamentally key value pair objects, but they
   allow us to use a more standardized syntax we would expect to use in other languages like Java.
 */
-export class App {
+export class App implements OnInit {
   protected readonly title = signal('pokedex');
 
   pokeNamePresent: WritableSignal<boolean> = signal(false);
@@ -55,6 +57,9 @@ export class App {
     this.pokeService.getPokemonSubject().subscribe( pokeData => {
       this.pokeNamePresent.set(pokeData.name != "");
     })
+  }
+  ngOnInit(): void {
+    this.router.navigate([""]);
   }
 
   /*
