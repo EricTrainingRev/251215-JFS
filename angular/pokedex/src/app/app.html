@@ -39,6 +39,12 @@
     <app-poke-move></app-poke-move>
 }
 
-
+<!-- 
+    One way to update your router-outlet is through a hyperlink. Instead of using the standard
+    href attribute you use the routerLink attribute
+-->
+<a href="https://www.wikipedia.org/">example link to wikipedia</a>
+<a routerLink="/example">click to see example component in router-outlet</a>
+<button (click)="renderRouteExampleTwo()">Click to see example component two in router-outlet</button>
 <!-- we will use this later -->
 <router-outlet />

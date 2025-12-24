@@ -1,6 +1,6 @@
 import { Component, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLinkWithHref, Router } from '@angular/router';
 import { PokeName } from './components/poke-name/poke-name';
 import { PokeSearch } from "./components/poke-search/poke-search";
 import { PokeService } from './services/poke-service';
@@ -21,14 +21,15 @@ import { PokeMove } from './components/poke-move/poke-move';
     the FormsModule to gain access to the ngModel directive in our template
   */
   imports: [
-    RouterOutlet, 
-    FormsModule, 
-    PokeName, 
-    PokeSearch, 
-    PokeSprites, 
+    RouterOutlet,
+    FormsModule,
+    PokeName,
+    PokeSearch,
+    PokeSprites,
     PokeType,
-    PokeMove
-  ],
+    PokeMove,
+    RouterLinkWithHref
+],
   templateUrl: './app.html', // a link to the component html or the raw html itself
   styleUrl: './app.css' // link to styling,
 })
@@ -46,8 +47,11 @@ export class App {
     here in the app component and check if the data in the subject is present. If it is not, we
     do not render the pokedata components. If it is present, then we do render the components, and let
     them handle subscribing to the subject to update their specific resources
+
+    We are also adding a Router service to this component: this will allow us to programmatically
+    navigate the various routes of our application
   */
-  constructor(private pokeService: PokeService){
+  constructor(private pokeService: PokeService, private router: Router){
     this.pokeService.getPokemonSubject().subscribe( pokeData => {
       this.pokeNamePresent.set(pokeData.name != "");
     })
@@ -81,5 +85,9 @@ export class App {
   // note we just provide the function signature when defining a function in a class
   updateDisplayedPokemonName(){
     this.pokemonName.set(this.pokemonIdentifier);
+  }
+
+  renderRouteExampleTwo(){
+    this.router.navigate(['/exampleTwo']);
   }
 }
