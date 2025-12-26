@@ -11,6 +11,7 @@ import java.util.UUID;
 public class JwtUtility {
 
     // This key will be sued for signing the jwt
+    // NOTE: this should be secret, so do not hard-code this value in a real application
     private final String SECRET_KEY = "your-key-should-be-at-least-32-bytes";
 
     // the JJWT Jwts resource uses the builder design pattern to facilitate creating your JWT
@@ -42,6 +43,15 @@ public class JwtUtility {
                 .getPayload()
                 // get the subject from the jwt data
                 .getSubject();
+    }
+
+    public String extractUsername(String token){
+        return Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("username", String.class);
     }
 
 }
