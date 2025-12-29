@@ -4,6 +4,7 @@ import com.revature.taskmanager.entity.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /*
@@ -16,4 +17,6 @@ import java.util.UUID;
     non-basic CRUD queries we can add them here
 */
 @Repository
-public interface AdminRepository extends JpaRepository<Admin, UUID> {}
+public interface AdminRepository extends JpaRepository<Admin, UUID> {
+    Optional<Admin> findByUsernameAndPassword(String username, String password);
+}
