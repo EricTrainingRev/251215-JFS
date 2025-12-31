@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TokenTransport } from '../interfaces/token-transport';
+import { LoginService } from '../services/login-service';
 
 @Component({
   selector: 'app-login',
@@ -13,26 +15,10 @@ export class Login {
   usernameInput = '';
   passwordInput = '';
 
-  constructor (private httpClient: HttpClient){}
+  constructor (private loginService: LoginService){}
 
-  adminLogin(){
-    this.httpClient.post(
-      "http://localhost:8080/login/admin",
-      {
-        username:this.usernameInput,
-        password:this.passwordInput
-      },
-      {
-        observe:"response"
-      }
-  ).subscribe({
-        next: response => {
-          console.log(response.status);
-        },
-        error: err => {
-          console.error(err);
-        }
-      });
+  login(){
+    this.loginService.adminLogin(this.usernameInput, this.passwordInput);
   }
 
 }
