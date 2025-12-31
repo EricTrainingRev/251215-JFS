@@ -24,10 +24,6 @@ export class JwtStorage {
   */
   private TOKEN_KEY = 'TASK_MANAGER_TOKEN';
 
-  constructor(){
-    this.clearToken();
-  }
-
   setToken(jwt: string){
     localStorage.setItem(this.TOKEN_KEY, jwt);
   }
