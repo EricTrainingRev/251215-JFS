@@ -47,12 +47,13 @@ public class JwtUtility {
     }
 
     public UserRole extractUserRole(String token){
-        return Jwts.parser()
+        String stringRole = Jwts.parser()
                 .verifyWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
-                .get("role", UserRole.class);
+                .get("role", String.class);
+        return UserRole.valueOf(stringRole);
     }
 
 }
