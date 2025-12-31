@@ -1,5 +1,6 @@
 package com.revature.taskmanager.util;
 
+import com.revature.taskmanager.enums.UserRole;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
@@ -15,12 +16,12 @@ public class JwtUtility {
     private final String SECRET_KEY = "your-key-should-be-at-least-32-bytes";
 
     // the JJWT Jwts resource uses the builder design pattern to facilitate creating your JWT
-    public String generateAccessToken(UUID userId, String username){
+    public String generateAccessToken(UUID userId, UserRole role){
         return Jwts.builder()
                 // The subject is the value we want to check to validate who the user is
                 .subject(userId.toString())
                 // If you need to access secondary information use the claim function
-                .claim("username", username)
+                .claim("role", role)
                 // we want to set when the jwt is created so we can set an expiration for the token
                 .issuedAt(new Date())
                 // the time works in miliseconds, so you will have to do a bit of math to get the time you want
@@ -45,13 +46,13 @@ public class JwtUtility {
                 .getSubject();
     }
 
-    public String extractUsername(String token){
+    public UserRole extractUserRole(String token){
         return Jwts.parser()
                 .verifyWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
-                .get("username", String.class);
+                .get("role", UserRole.class);
     }
 
 }
