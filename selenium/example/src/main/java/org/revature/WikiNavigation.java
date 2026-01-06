@@ -22,9 +22,13 @@ public class WikiNavigation {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--start-maximized");
             driver = new ChromeDriver(options);
+//            You can uncomment these methods to see them in action. elementDoesNotExist will crash the app (as intended)
 //            basicNavigation(driver);
 //            findMultipleElements(driver);
-            elementDoesNotExist(driver);
+//            elementDoesNotExist(driver);
+//            cssSelector(driver);
+//            cssSelectorTwo(driver);
+//            navigatingWithNavigate(driver);
         } finally {
             if (driver != null){
                 driver.quit();
@@ -82,6 +86,45 @@ public class WikiNavigation {
          */
         driver.get("https://www.wikipedia.org/");
         System.out.println(driver.findElement(By.id("does-not-exist")).getText());
+    }
+
+    static void cssSelector(WebDriver driver) {
+        /*
+            You can always use the cssSelector locator strategy to target your
+            elements like you would for styling purposes. Under the hood, Selenium
+            actually uses this strategy for the other locator strategies, such as
+            class and id. The id and class methods provided by the By class are
+            essentially helper methods to create css selectors based on the id/class
+            of an element
+         */
+        driver.get("https://www.wikipedia.org/");
+        driver.findElement(By.cssSelector("div.lang4 > a")).click();
+        System.out.println(driver.getTitle());
+    }
+
+    static void cssSelectorTwo(WebDriver driver) {
+        /*
+            If you ever need to represent string data in your selector you can wrap
+            it in single quotes and it should work just fine
+         */
+        driver.get("https://www.wikipedia.org/");
+        driver.findElement(By.cssSelector("a[title='Deutsch — Wikipedia — Die freie Enzyklopädie']")).click();
+        System.out.println(driver.getTitle());
+    }
+
+    static void navigatingWithNavigate(WebDriver driver){
+        /*
+            Much like a regular user, Selenium can perform the "back" and "forward" actions in the browser via the
+            navigate() method. This method also provides access to the to() method, which is what Selenium actually uses
+            to navigate to a page. the get() method is a simplified wrapper for accessing the to() method
+         */
+        driver.navigate().to("https://www.wikipedia.org/"); // navigate to wikipedia
+        driver.findElement(By.partialLinkText("English")).click(); // click English link
+        System.out.println(driver.getTitle());
+        driver.navigate().back(); // perform the "back" browser operation
+        System.out.println(driver.getTitle());
+        driver.navigate().forward(); // perform the "forward" browser operation
+        System.out.println(driver.getTitle());
     }
 
 }
