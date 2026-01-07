@@ -160,3 +160,52 @@ This syntax works because all three elements are direct children of the body ele
 **XPath** supports multiple functions within queries: these can be used to refine the results of your queries and target specific elements in a larger collection. Going back the **relative XPath** query of `//p[2]` if we did not have knowledge of the parent `div` elements, but did know the text content of the `p` elements, we could refine our query to target the `p` element that has the word "two" in its text content: `//p[contains(text(),'two')]` makes use of two **XPath** functions, `contains` and `text`. `contains` checks if the first argument has the second inside it, and `text` returns the text content of a node, in this case the `p` elements selected by the relative path `//p`. Since only the second `p` element has the word "two" in its text content, the single `p` element is returned by the query
 
 [This website](https://devhints.io/xpath) has an excellent XPath cheatsheet that can be used as a reference when writing your own **XPath**, and includes a large collection of **XPath** selectors, expressions, and functions
+
+## Page Object Model
+
+### Page Object Model Design Pattern
+Similar to how OOP languages encapsulate data in classes, browser data and actions can be encapsulated in **Page Object Models** to simplify how the browser is automated with **Selenium**. By encapsulating the relevant data of a web page into a class and writing out logic to interact with those elements in methods you create a streamlined solution for creating repeatable automation. **Page Object Models** have three core features:
+- references to the core web elements on the page
+- methods for interacting with the core web elements
+- a **WebDriver** acting as the API
+```java
+public class POMExample{
+    
+    private WebDriver driver;
+    private WebElement importantElement;
+
+    public POMExample(WebDriver driver){
+        this.driver = driver;
+    }
+
+    public void interactWithElement(){
+        importantElement = driver.findElement(By.id("important"));
+        importantElement.click();
+    }
+
+}
+```
+
+### PageFactory
+One potential issue in building **Page Object Models** is handling `StaleElementExceptions`: creating a **WebElement** once in any sort of complex automation application is going to quickly become stale. You can write your code in such a way that every time you reference an element saved in your **POM** you redefine it, but this can become cumbersome. Fortunately, Selenium provides a class called **PageFactory** that can handle the reinitializing of **WebElement** objects to prevent their going stale. The **PageFactory** utilizes annotations to determine how the **WebDriver** should locate an element, then abstracts away the locating of the element so focus can be on interacting with the element.
+```java
+public class POMExample{
+    
+    private WebDriver driver;
+
+    @FindBy(id = "important")
+    private WebElement importantElement;
+
+    public POMExample(WebDriver driver){
+        this.driver = driver;
+        // the page factory requires a driver and a reference to the POM to work correctly
+        PageFactory.initElements(driver,this);
+    }
+
+    public void interactWithElement(){
+        importantElement.click();
+    }
+
+}
+```
+The **Page Factory** is able to find individual and collections of elements, the object initialized is determined by whether a singular **WebElement** or list of **WebElements** is set as the type of the field
