@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.revature'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    /*
+        We have a lot of dependencies working together here:
+        cucumber-java provides the core Cucumber capabilities
+        cucumber-junit-platform-engine provides the tools for integrating Cucumber and
+                                       Junit
+        junit-jupiter provides the core Junit5 capabilities
+        junit-platform-suite provides the tools for allowing Cucumber to integrate into
+                             Junit5
+
+        Note we are using an older version of Junit5, this is because it is compatible
+        with the current version (at the time of this demo) of Cucumber
+     */
+
+    // https://mvnrepository.com/artifact/io.cucumber/cucumber-java
+    testImplementation 'io.cucumber:cucumber-java:7.33.0'
+    // https://mvnrepository.com/artifact/io.cucumber/cucumber-junit-platform-engine
+    testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.33.0'
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.14.0'
+    // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-suite
+    testImplementation 'org.junit.platform:junit-platform-suite:1.14.1'
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    implementation 'org.seleniumhq.selenium:selenium-java:4.39.0'
+}
+
+test {
+    useJUnitPlatform()
+}
