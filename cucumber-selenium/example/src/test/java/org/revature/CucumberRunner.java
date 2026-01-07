@@ -34,7 +34,7 @@ import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
  */
 @Suite
 @IncludeEngines("cucumber")
-@SelectPackages({"steps", "features"})
+@SelectPackages({"org.revature.steps", "features"})
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "steps")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty, html:target/cucumber-report.html")
 public class CucumberRunner {
