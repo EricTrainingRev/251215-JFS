@@ -5,6 +5,7 @@ import io.cucumber.java.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.revature.poms.ExamplePage;
 import org.revature.poms.WikiHome;
 
 import java.time.Duration;
@@ -15,6 +16,8 @@ public class SeleniumTestResources {
 
     public static WikiHome wikiHome;
 
+    public static ExamplePage examplePage;
+
     @Before
     public static void setup(){
         System.out.println("Starting Selenium Setup");
@@ -23,6 +26,7 @@ public class SeleniumTestResources {
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         wikiHome = new WikiHome(driver);
+        examplePage = new ExamplePage(driver);
         System.out.println("Selenium Setup finished");
     }
 
