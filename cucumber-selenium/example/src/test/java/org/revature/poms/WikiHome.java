@@ -1,5 +1,6 @@
 package org.revature.poms;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -48,6 +49,10 @@ public class WikiHome {
 
     public void clickEnglishLink(){
         englishLink.click();
+    }
+
+    public void clickLanguageLink(String language){
+        driver.findElement(By.partialLinkText(language)).click();
     }
 
 }
