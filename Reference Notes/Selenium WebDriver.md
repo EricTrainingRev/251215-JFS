@@ -1,3 +1,5 @@
+# Selenium WebDriver Study Guide
+
 ## Selenium Ecosystem
 
 ### Selenium Introduction
@@ -160,6 +162,131 @@ This syntax works because all three elements are direct children of the body ele
 **XPath** supports multiple functions within queries: these can be used to refine the results of your queries and target specific elements in a larger collection. Going back the **relative XPath** query of `//p[2]` if we did not have knowledge of the parent `div` elements, but did know the text content of the `p` elements, we could refine our query to target the `p` element that has the word "two" in its text content: `//p[contains(text(),'two')]` makes use of two **XPath** functions, `contains` and `text`. `contains` checks if the first argument has the second inside it, and `text` returns the text content of a node, in this case the `p` elements selected by the relative path `//p`. Since only the second `p` element has the word "two" in its text content, the single `p` element is returned by the query
 
 [This website](https://devhints.io/xpath) has an excellent XPath cheatsheet that can be used as a reference when writing your own **XPath**, and includes a large collection of **XPath** selectors, expressions, and functions
+
+## Web Element Interactions
+
+### Interact Methods
+Once a **WebElement** is created there are several actions that can be performed on elements found on a web page. The **clear()** method is used to remove any text content from an input field. The **click()** method simulates a user clicking on the center of the element, which is useful for interacting with buttons, links, and other clickable elements. The **getAttribute(attribute)** method returns the value of the specified attribute of the element, allowing you to retrieve properties such as `id`, `class`, or `href`
+
+The **getText()** method returns any text content within the element, which is helpful for extracting information displayed on the web page. **sendKeys(keys)** simulates the user entering text into an input field. This method can also be used to upload files by providing the absolute file path of the resource you wish to upload. Although the **submit()** method is deprecated, it is still supported for compatibility reasons. It was previously the preferred way to submit web forms, but now it is recommended to use the **click()** method on the form's submit button instead
+
+### Select Elements
+HTML Select elements are unique in that **Selenium** provides a **Select** class that has unique methods for interacting with option elements it contains. To create a **Select** object you first create a **WebElement** object, then pass it into a **Select** constructor
+```java
+WebElement selectElement = driver.findElement(By.tagName("select"));
+Select selectObject = new Select(selectElement);
+```
+**Select** objects have two methods for viewing the associated option elements: **geOptions()** will return a list of all option elements of the **Select** web element, and **getAllSelectedOptions()** will return a list of all currently selected option elements in the **Select** web element. Note that depending on whether the **Select** element supports multi-selecting, zero, one, or multiple **WebElements** can be returned in a List object. Once you know what your options for selecting are there are three ways you can choose your options to select: by visible text, by value, and by index position:
+- **selectByVisibleText(text)**
+    - this method will select an option based on the visible text of the option element
+- **selectByValue(value)**
+    - this method will select an option based on the value attribute of the option element
+- **selectByIndex(index)**
+    - this method will select an option based on the index position of the option element
+
+### Driver Integration
+**WebElement** objects have access to the same find methods the **WebDriver** class uses, which means you can search for new elements using your already found web elements as the starting point for the search
+```java
+WebElement someElement = driver.findElement(By.id("someId"));
+
+// this will return the first p element that is a descendant of someElement
+WebElement anotherElement = someElement.findElement(By.tagName("p"));
+```
+This feature provides flexibility in how you can search for web elements: if you know some element is going to be constant, but the descendant elements are variable, you can get the constant element and then search its descendants for the content you are looking for, narrowing the scope of possible elements you will need to search through
+
+### Actions API
+Selenium can interact with the keyboard, mouse input, and scroll wheel through the use of the **Actions API**. This API is suitable for performing more complex actions, such as click and drag, scrolling through a large list using the mouse wheel, or simulating a user on a touch screen making a multi-finger gesture. This is accomplished by chaining together a sequence of actions you want performed (example taken from Selenium documentation)
+```java
+WebElement clickable = driver.findElement(By.id("clickable"));
+new Actions(driver)
+        .moveToElement(clickable)
+        .pause(Duration.ofSeconds(1))
+        .clickAndHold()
+        .pause(Duration.ofSeconds(1))
+        .sendKeys("abc")
+        .perform();
+```
+The API is designed for interacting with hardware that interacts with the browser, but it can also be used for fine-tuned control over how element interaction works. For instance, instead of using a wait to pause Selenium till a slow process completes, you can use the **Actions API** to control the pause in execution
+
+## Waits
+
+### Implicit Wait
+Selenium is a fast acting program, and sometimes its speed is too quick for the web pages it should be automating. It is not uncommon for Selenium to automate itself ahead of what the web page it is working on can handle. This can lead to situations where Selenium will throw exceptions saying things like an element can't be found, but when you manually perform the same actions everything works as expected. In these instances you need a way to tell Selenium to wait a bit in order to allow the web page to perform all the actions/load all the information it needs before Selenium continues operations. **Selenium** provides three different options to control the way Selenium pauses automation:
+- **Implicit Wait**
+- **Explicit Waits**
+- **Fluent Waits**
+
+**Implicit Wait** is configured directly in the **WebDriver**: it tells Selenium how long to wait before throwing an `ElementNotFound` exception if the **Selenium** is unable to locate an element. The default wait time is 0, meaning if Selenium does not immediately find the element it throws an exception
+```java
+driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
+```
+**Selenium** is expected to quickly automate web pages, so it is not recommended to make the **Implicit Wait** time very long: it should be used to accommodate situations like high latency. One-off situations where you need to wait for a significant amount of time should be handled by a different type of wait
+
+### Explicit Waits
+**Explicit Waits** apply individually and adjust **Selenium's** waiting time for a wide range of conditions to be met. For example, if it usually takes 3 seconds for an element to load, you can use an **Explicit Wait**, managed by a **WebDriverWait** object, to tell **Selenium** to pause execution while waiting for that element to load. This allows you to avoid adjusting your **Implicit Wait** to accommodate outlier elements that takes a long time to load. **Explicit Waits** also allow you to wait for many other situations (alert present/gone, title text to be new, element hidden, etc.). Your wait condition can be determined by using the **ExpectedConditions** class
+```java
+// WebDriverWait objects require a driver to manage and a time duration to wait
+WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(2));
+
+// this tells the Selenium to wait up to 2 seconds for an alert to be present in the browser
+explicitWait.until(ExpectedConditions.alertIsPresent());
+```
+These **Explicit Waits** should always be used instead of solutions like `Thread.sleep()`: they have well documented and defined behavior that help guide your **Selenium** development
+
+### Fluent Waits
+**Fluent Waits** are similar to to **Explicit Waits** in that they are for one-off situations, but they are more configurable than regular **Explicit Waits**. The wait time, polling time (how often Selenium checks the web page), and exceptions to be ignored can all be customized
+```java
+Wait<WebDriver> wait =
+    new FluentWait<>(driver)
+        .withTimeout(Duration.ofSeconds(5))
+        .pollingEvery(Duration.ofMillis(500))
+        .ignoring(ElementNotInteractableException.class);
+```
+the fluent wait above tells **Selenium** to pause execution up to 5 seconds, checking every 500 miliseconds if some expected condition is met, and ignoring the `ElementNotInteractableException` specifically
+
+Sometimes you will have an action that does not fit neatly into the pre-provided **ExpectedConditions** provided by **Selenium**. In these cases, or if you would like to stick with your pre-made code, you can instead pass a **Fluent Wait** (or an **Explicit Wait**) a lambda to indicate what condition you are waiting for
+```java
+Wait<WebDriver> wait =
+    new FluentWait<>(driver)
+        .withTimeout(Duration.ofSeconds(5))
+        .pollingEvery(Duration.ofMillis(500))
+        .ignoring(ElementNotFound.class);
+wait.until(d -> {
+    d.findElement(By.id("resourceBeingCreatedThatTakesTime"));
+    return true;
+});
+```
+The example above tells Selenium to wait until the driver (variable d) successfully finds the resource with the given **locator strategy**. This can also be used when waiting for some resource to be found and saved to a variable to be used later
+```java
+WebElement someCreatedResource;
+Wait<WebDriver> wait =
+    new FluentWait<>(driver)
+        .withTimeout(Duration.ofSeconds(5))
+        .pollingEvery(Duration.ofMillis(500))
+        .ignoring(ElementNotFound.class);
+someCreatedResource = wait.until(d -> d.findElement(By.id("resourceBeingCreatedThatTakesTime")));
+System.out.println(someCreatedResource.getText());
+```
+
+## Window Management
+
+### Alerts
+Browsers have three standard popup options: alerts, confirmations, and prompts. All three options are handled the same way in **Selenium**, which is by creating **Alert** objects and interacting with the popup
+```java
+Alert alert = driver.switchTo().alert();
+```
+When working with Alert objects in your code there are several methods available to interact with them. The **getText()** method retrieves the text content displayed within the alert, allowing you to read and process the message. If the alert accepts user input, you can use the **sendKeys(text)** method to send text to the alert. To proceed with the alert, you can use the **accept()** method, which simulates clicking the "OK" button. Conversely, if you need to cancel the alert, the **dismiss()** method will simulate clicking the "Cancel" button
+
+### Window Handling
+As far as **Selenium** is concerned, browser windows and tabs are the same thing, so the API for interacting with them treats them as "windows" to keep things simple. you can get the "handle" of your current window using the driver **getWindowHandle()** method
+```java
+String currentWindowHandle = driver.getWindowHandle();
+```
+When an action in the browser opens a new tab or window the browser usually opens it in such a way that it is in focus; this is useful for a human using the browser, but for **Selenium** it is irrelevant. The software must be told to shift from one window to another manually using the **window()** method, similar to how the **alert()** method is used to gain access to a popup alert
+```java
+driver.switchTo().window(newWindowHandleString)
+```
+Selenium does not manually keep track of the currently active windows, but the **getWindowHandles()** method can be used to get a Set of all open windows. This Set can be iterated through to find the window you want and set it to the active one before operations continue
 
 ## Page Object Model
 
