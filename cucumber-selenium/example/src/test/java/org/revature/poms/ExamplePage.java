@@ -8,12 +8,20 @@ import org.openqa.selenium.support.PageFactory;
 
 public class ExamplePage {
 
+    /*
+        On Windows you can put the absolute file path alone, on Mac you need to append the "file://" protocol statement.
+        If you run into issues with the URL being recognized try adding the "file://" protocol to the start of the
+        path
+     */
     private final String URL = "C:\\Users\\EricSuminski\\Desktop\\251215-JFS\\cucumber-selenium\\example\\src\\test\\resources\\example-page.html";
 
     private WebDriver driver;
 
     @FindBy(tagName = "button")
     private WebElement button;
+
+    @FindBy(id = "exampleSelect")
+    private WebElement select;
 
     public ExamplePage(WebDriver driver){
         this.driver = driver;
@@ -45,6 +53,10 @@ public class ExamplePage {
      */
     public void closeAlert(){
         driver.switchTo().alert().accept();
+    }
+
+    public WebElement getSelect(){
+        return select;
     }
 
 }
