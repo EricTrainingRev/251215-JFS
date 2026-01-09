@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.notNullValue;
     use your default web server then set the value to DEFINED_PORT
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class AdminLoginTest {
+public class AdminLoginAPITest {
 
     /*
         Junit will still be our test engine, but the actual steps within the test
