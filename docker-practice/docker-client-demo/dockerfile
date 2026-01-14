@@ -1,0 +1,36 @@
+# The FROM keyword tells Docker what base image you want to use for creating your own image.
+# This base image will provide starting code for your image. In this case the base image will
+# provide the nginx software that we are going to use to host our simple web page
+FROM nginx:alpine
+
+# Anytime as part of the build process when you need to execute code as part of the building process
+# you use the RUN keyword. This will execute your command in the build environment, so this does mean
+# that whatever command you want to run needs to be present within the image you are working with.
+# For instance, if you need to execute a gradle command to build your gradle app, the image you
+# reference in your FROM statement must provide the gradle software. If it does not, or if your
+# code does not include a gradle wrapper, then the command will fail.
+# Remove default nginx website
+RUN rm -rf /usr/share/nginx/html/*
+
+# Any files or directories you need included in your image are added via the COPY keyword. This
+# tells docker to add a copy of your resources to the location you specify. In the example below
+# the index html/css/js files are all copied from their location (note the path to the files on
+# the local machine is relative to the location of the dockerfile) to the location in the image
+# where you want them saved. Note that some images, like the nginx:alpine image, have pre-made
+# directory structures. We make use of the nginx pre-made structure in the example below
+
+# Note there is also the ADD keyword: this keyword lets you target files on the local system AND
+# remote urls to get resources. For instance, if you want to download a file as part of the build
+# process you can reference the http link in your ADD command
+# Copy static site files to nginx public folder
+COPY index.html /usr/share/nginx/html/
+COPY index.css /usr/share/nginx/html/
+COPY index.js /usr/share/nginx/html/
+
+# EXPOSE tells docker what port on the container you want to make publicly accessible. By default all
+# ports are private, and will not allow access to outside resources. Typically the port you expose
+# is meant to be the entry point for the container.
+# Expose port 80
+EXPOSE 80
+
+# Start nginx (default command)

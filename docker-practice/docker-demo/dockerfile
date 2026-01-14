@@ -1,0 +1,39 @@
+# --- Build stage ---
+# Note this FROM statement includes an "AS build" statement. What this does is it tells Docker
+# "We are going to reference this image and the changes we made to it later in the build process:
+# when we do we will use the name provided to tell you that we are referencing it"
+FROM eclipse-temurin:21-jdk AS build
+# WORKDIR tells docker what directory to use as the working directory for any subsequent actions
+# If it does not exist it will be made
+WORKDIR /app
+# copy everything over
+COPY . .
+# make the gradle wrapper executable
+RUN chmod +x gradlew
+# use the wrapper to build our app and skip tests
+RUN ./gradlew clean build -x test
+
+# --- Runtime stage ---
+# Here we tell Docker that we want to work in a new container, with the eclipse-temurin 21-jre
+# content. Since this container will just be used to run our application we don't need the 
+# development kit or any of our source code beyond the built JAR, so this is why we switch into
+# a new container.
+FROM eclipse-temurin:21-jre
+# keep a standard work directory
+WORKDIR /app
+# Here in the copy command we specify that we want to copy from the build environment instead of
+# the default localt file system. This is why we provided a name for the first FROM statement, so
+# we can reference it here to get access to the built JAR file that was created
+COPY --from=build /app/build/libs/*.jar app.jar
+# Make sure to expose the correct port so the application can be reached
+EXPOSE 8080
+# ENTRYPOINT tells Docker what command should be executed when the container is first started. 
+# There is also the CMD keyword you can use: think of CMD as optional flags you can add that
+# augment your entrypoint command. So when putting together your own dockerfile follow this
+# setup: ENTRYPOINT to define a command you always want executed, CMD for any flags or optional
+# additions to your ENTRYPOINT command. Therefore you can think of Docker as starting your application
+# like this: ENTRYPOINT CMD. By default, if a user provides any of their own commands, such as bash,
+# after their docker run statement, the user provided command will override any CMD stated in the
+# dockerfile. The ENTRYPOINT command does not get overridden unless the user specifies --entrypoint
+# via a flag
+ENTRYPOINT ["java", "-jar", "app.jar"]

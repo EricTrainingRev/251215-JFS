@@ -1,0 +1,25 @@
+# a Docker Compose file is a way of grouping multiple containers, volumes, and networks together.
+# You can use the command "docker compose up" to have docker create and start all the resources
+# listed in the compose file. The example below can be used to spin up the example spring app and
+# web page used in the lecture
+# Documentation: https://docs.docker.com/compose/
+services:
+  backend:
+    image: esuminski/docker-practice-backend:latest
+    container_name: backend-demo
+    ports:
+      - "8080:8080"
+    networks:
+      - appnet
+
+  client:
+    image: esuminski/docker-practice-client:latest
+    container_name: frontend-demo
+    ports:
+      - "80:80"
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
