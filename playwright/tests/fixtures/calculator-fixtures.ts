@@ -1,9 +1,11 @@
 // we set an alias for the Playwright test object to make it a bit less confusing extending it
-import { test as base, expect } from '@playwright/test';
+import { test as base, expect as baseExpect } from '@playwright/test';
 
 // this custom type data is needed for Typescript to not get angry with us
 type TestData = {
-    testData: Array<string|number|boolean>
+    stringData: Array<string>,
+    isExact: boolean,
+    buttonPosition: number
 }
 
 /*
@@ -12,19 +14,25 @@ type TestData = {
     resources with specific user profiles or configurations set up, anything you want Playwright
     to provide for test execution is set up in this way
 */
-const test = base.extend<TestData>({
-    testData: async ({}, use)=>{
+export const test = base.extend<TestData>({
+    stringData: async ({}, use)=>{
         const data = [
             'button[data-value="5"]',
             "button",
-            '-',
-            true,
+            '−',
             '6',
-            'button',
-            14,
             '#display',
             '-1'
         ]
-        use(data);
+        await use(data);
+    },
+    isExact: async ({}, use) =>{
+        await use(true);
+    },
+    buttonPosition: async ({}, use) => {
+        await use(14);
     }
 });
+
+// This is not necessary, but it is a way to keep your imports a bit cleaner
+export const expect = baseExpect;
